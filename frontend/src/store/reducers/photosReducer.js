@@ -3,11 +3,12 @@ import {
     ADD_DATA_REQUEST, ADD_DATA_SUCCESS,
     FETCH_DATA_FAILURE,
     FETCH_DATA_REQUEST,
-    FETCH_PHOTOS_SUCCESS
+    FETCH_PHOTOS_SUCCESS, GET_AUTHOR_SUCCESS, RESET_AUTHOR
 } from "../actions/actionTypes";
 
 const initialState = {
     photos: [],
+    author: '',
     loading: true,
     error: null
 };
@@ -22,6 +23,12 @@ const photosReducer = (state = initialState, action) => {
 
         case FETCH_PHOTOS_SUCCESS:
             return {...state, loading: false, photos: action.photos};
+
+        case GET_AUTHOR_SUCCESS:
+            return {...state, author: action.author};
+
+        case RESET_AUTHOR:
+            return {...state, author: ''};
 
         case ADD_DATA_REQUEST:
             return {...state, loading: true};

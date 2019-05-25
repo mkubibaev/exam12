@@ -71,12 +71,9 @@ export const facebookLogin = userData => {
 };
 
 export const logoutUser = () => {
-    return async (dispatch, getState) => {
-        const token = getState().users.user.token;
-        const config = {headers: {'Authorization': token}};
-
+    return async dispatch => {
         try {
-            const response = await axios.delete('/users/sessions', config);
+            const response = await axios.delete('/users/sessions');
             dispatch(logoutUserSuccess());
             NotificationManager.success(response.data.message);
             dispatch(push('/'));

@@ -6,7 +6,7 @@ import {
     ADD_DATA_REQUEST,
     ADD_DATA_SUCCESS, DELETE_DATA_FAILURE, DELETE_DATA_REQUEST, DELETE_DATA_SUCCESS,
     FETCH_DATA_FAILURE,
-    FETCH_DATA_REQUEST, FETCH_PHOTOS_SUCCESS
+    FETCH_DATA_REQUEST, FETCH_PHOTOS_SUCCESS, GET_AUTHOR_SUCCESS, RESET_AUTHOR
 } from "./actionTypes";
 
 const fetchDataRequest = () => ({type: FETCH_DATA_REQUEST});
@@ -21,6 +21,8 @@ const deleteDataFailure = error => ({type: DELETE_DATA_FAILURE, error});
 const deleteDataSuccess = () => ({type: DELETE_DATA_SUCCESS});
 
 const fetchPhotosSuccess = photos => ({type: FETCH_PHOTOS_SUCCESS, photos});
+const getAuthorSuccess = author => ({type: GET_AUTHOR_SUCCESS, author});
+const resetAuthor = () => ({type: RESET_AUTHOR});
 
 export const fetchPhotos = user => {
     return async dispatch => {
@@ -35,6 +37,21 @@ export const fetchPhotos = user => {
             dispatch(fetchPhotosSuccess(response.data));
         } catch (e) {
             dispatch(fetchDataFailure(e));
+        }
+    }
+};
+
+export const getAuthor = id => {
+    return async dispatch => {
+        if (id) {
+            try {
+                const response = await axios.get(`/users/author/${id}`);
+                dispatch(getAuthorSuccess(response.data));
+            } catch (e) {
+                NotificationManager.error(e.response.data.message);
+            }
+        } else {
+            dispatch(resetAuthor());
         }
     }
 };

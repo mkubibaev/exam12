@@ -4,7 +4,7 @@ import {NavLink as RouterNavLink} from 'react-router-dom';
 import {Button, Modal, ModalBody, ModalFooter, Row} from "reactstrap";
 
 import {apiURL} from "../../constants";
-import {deletePhoto, fetchPhotos} from "../../store/actions/photosActions";
+import {deletePhoto, fetchPhotos, getAuthor} from "../../store/actions/photosActions";
 import Loader from "../../components/UI/Loader/Loader";
 import Photo from "../../components/Photo/Photo";
 
@@ -16,11 +16,13 @@ class Photos extends Component {
 
     componentDidMount() {
         this.props.fetchPhotos(this.props.match.params.user);
+        this.props.getAuthor(this.props.match.params.user);
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.match.params.user !== prevProps.match.params.user) {
             this.props.fetchPhotos(this.props.match.params.user);
+            this.props.getAuthor(this.props.match.params.user);
         }
     };
 
@@ -40,8 +42,8 @@ class Photos extends Component {
     render() {
         let title = 'All photos';
 
-        if (this.props.photos.length && this.props.match.params.user) {
-            title = `Photos by ${this.props.photos[0].user.displayName}`
+        if (this.props.author) {
+            title = `Photos by ${this.props.author.displayName}`
         }
 
         return (
@@ -93,6 +95,7 @@ class Photos extends Component {
 
 const mapStateToProps = state => ({
     user: state.users.user,
+    author: state.photos.author,
     photos: state.photos.photos,
     error: state.photos.error,
     loading: state.photos.loading
@@ -100,6 +103,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     fetchPhotos: user => dispatch(fetchPhotos(user)),
+    getAuthor: id => dispatch(getAuthor(id)),
     deletePhoto: (photoId, userId) => dispatch(deletePhoto(photoId, userId))
 });
 

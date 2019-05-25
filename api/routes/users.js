@@ -7,6 +7,15 @@ const User = require('../models/User');
 
 const router = express.Router();
 
+router.get('/author/:id', async (req, res) => {
+    try {
+        const author = await User.findById(req.params.id, 'displayName');
+        return res.send(author);
+    } catch (e) {
+        return res.status(400).send(e);    
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
         const user = new User({
