@@ -1,12 +1,18 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
-import {Row} from "reactstrap";
+import {Button, Modal, ModalBody, ModalFooter, Row} from "reactstrap";
 
+import {apiURL} from "../constants";
 import {fetchPhotos} from "../store/actions/photosActions";
 import Loader from "../components/UI/Loader/Loader";
 import Photo from "../components/Photo/Photo";
 
 class Photos extends Component {
+    state = {
+        modal: false,
+        selectedPhoto: {}
+    };
+
     componentDidMount() {
         this.props.fetchPhotos(this.props.match.params.user);
     }
@@ -17,10 +23,17 @@ class Photos extends Component {
         }
     };
 
+    toggleModal = selectedPhoto => {
+        this.setState({
+            modal: !this.state.modal,
+            selectedPhoto
+        });
+    };
+
     render() {
         let title = 'All photos';
 
-        if (this.props.photos && this.props.match.params.user) {
+        if (this.props.photos.length && this.props.match.params.user) {
             title = `Photos by ${this.props.photos[0].user.displayName}`
         }
 
@@ -44,10 +57,20 @@ class Photos extends Component {
                                 title={photo.title}
                                 image={photo.image}
                                 user={user}
+                                toggleModal={() => this.toggleModal(photo)}
                             />
                         )
                     })}
                 </Row>
+                <Modal isOpen={this.state.modal} size="lg">
+                    <ModalBody>
+                        <img width="100%" src={`${apiURL}/uploads/${this.state.selectedPhoto.image}`} alt=""/>
+                    </ModalBody>
+                    <ModalFooter className="d-flex justify-content-between">
+                        <h5 className="m-0">{this.state.selectedPhoto.title}</h5>
+                        <Button color="secondary" size="sm" onClick={this.toggleModal}>Close</Button>
+                    </ModalFooter>
+                </Modal>
             </Fragment>
         );
     }

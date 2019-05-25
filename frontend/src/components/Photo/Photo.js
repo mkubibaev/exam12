@@ -7,16 +7,16 @@ const Photo = props => {
     return (
         <Col xs="12" sm="6" md="4">
             <Card className="mb-3">
-                <CardImg top width="100%" src={`${apiURL}/uploads/${props.image}`} alt={props.title}/>
+                <CardImg
+                    top width="100%"
+                    src={`${apiURL}/uploads/${props.image}`}
+                    alt={props.title}
+                    onClick={props.toggleModal}
+                />
                 <CardBody>
-                    <h4>
-                        <CardTitle
-                            tag={RouterNavLink}
-                            to={`/items/${props.id}`}
-                        >
-                            {props.title}
+                        <CardTitle>
+                            <h4 onClick={props.toggleModal}>{props.title}</h4>
                         </CardTitle>
-                    </h4>
                     {props.user
                         ? <CardText>
                             <span className="mr-1">by</span>
