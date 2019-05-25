@@ -4,7 +4,7 @@ import {NavLink as RouterNavLink} from 'react-router-dom';
 import {Button, Modal, ModalBody, ModalFooter, Row} from "reactstrap";
 
 import {apiURL} from "../../constants";
-import {fetchPhotos} from "../../store/actions/photosActions";
+import {deletePhoto, fetchPhotos} from "../../store/actions/photosActions";
 import Loader from "../../components/UI/Loader/Loader";
 import Photo from "../../components/Photo/Photo";
 
@@ -57,10 +57,10 @@ class Photos extends Component {
 
                 <Row>
                     {this.props.photos.map(photo => {
-                        let user = photo.user;
+                        let userPage = false;
 
                         if (this.props.match.params.user) {
-                            user = null;
+                            userPage = true;
                         }
 
                         return (
@@ -68,8 +68,11 @@ class Photos extends Component {
                                 key={photo._id}
                                 title={photo.title}
                                 image={photo.image}
-                                user={user}
-                                showModal={() => this.showModal(photo)}
+                                author={photo.user}
+                                user={this.props.user}
+                                userPage={userPage}
+                                showPhoto={() => this.showModal(photo)}
+                                deletePhoto={() => this.props.deletePhoto(photo._id, this.props.match.params.user)}
                             />
                         )
                     })}
@@ -96,7 +99,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchPhotos: user => dispatch(fetchPhotos(user))
+    fetchPhotos: user => dispatch(fetchPhotos(user)),
+    deletePhoto: (photoId, userId) => dispatch(deletePhoto(photoId, userId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Photos);

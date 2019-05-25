@@ -54,3 +54,21 @@ export const addPhoto = photoData => {
         }
     }
 };
+
+export const deletePhoto = (photoId, userId) => {
+    return async dispatch => {
+
+        dispatch(deleteDataRequest());
+
+        try {
+            const response = await axios.delete(`/photos/${photoId}`);
+
+            dispatch(deleteDataSuccess());
+            NotificationManager.success(response.data.message);
+            dispatch(fetchPhotos(userId));
+        } catch (e) {
+            NotificationManager.error(e.response.data.message);
+            dispatch(deleteDataFailure(e));
+        }
+    }
+};
