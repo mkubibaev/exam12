@@ -5,6 +5,7 @@ import {connectRouter, routerMiddleware} from "connected-react-router";
 
 import {saveToLocalStorage, loadFromLocalStorage} from "./localStorage";
 import usersReducer from "./reducers/usersReducer";
+import photosReducer from "./reducers/photosReducer";
 
 
 export const history = createBrowserHistory();
@@ -12,6 +13,7 @@ export const history = createBrowserHistory();
 const rootReducer = combineReducers({
     router: connectRouter(history),
     users: usersReducer,
+    photos: photosReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

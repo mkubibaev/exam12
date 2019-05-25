@@ -1,0 +1,40 @@
+import {
+    ADD_DATA_FAILURE,
+    ADD_DATA_REQUEST, ADD_DATA_SUCCESS,
+    FETCH_DATA_FAILURE,
+    FETCH_DATA_REQUEST,
+    FETCH_PHOTOS_SUCCESS
+} from "../actions/actionTypes";
+
+const initialState = {
+    photos: [],
+    loading: true,
+    error: null
+};
+
+const photosReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case FETCH_DATA_REQUEST:
+            return {...state, loading: true};
+
+        case FETCH_DATA_FAILURE:
+            return {...state, loading: false, error: action.error};
+
+        case FETCH_PHOTOS_SUCCESS:
+            return {...state, loading: false, photos: action.photos};
+
+        case ADD_DATA_REQUEST:
+            return {...state, loading: true};
+
+        case ADD_DATA_FAILURE:
+            return {...state, loading: false, error: action.error};
+
+        case ADD_DATA_SUCCESS:
+            return {...state, error: null};
+
+        default:
+            return state
+    }
+};
+
+export default photosReducer;

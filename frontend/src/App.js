@@ -1,7 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import {NotificationContainer} from "react-notifications";
-import {Container} from "reactstrap";
 import {Route, Switch} from "react-router-dom";
+import {Container} from "reactstrap";
+
+import Toolbar from "./components/UI/Toolbar/Toolbar";
+import Photos from "./Photos/Photos";
 
 class App extends Component {
 
@@ -10,11 +13,11 @@ class App extends Component {
             <Fragment>
                 <NotificationContainer/>
                 <header>
-                    toolbar
+                    <Toolbar/>
                 </header>
-                <Container className="py-5">
+                <Container className="py-4">
                     <Switch>
-                        {/*<Route path="/" exact component={}/>*/}
+                        <Route path="/" exact component={Photos}/>
                     </Switch>
                 </Container>
             </Fragment>
