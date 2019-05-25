@@ -74,7 +74,7 @@ class Photos extends Component {
                                 user={this.props.user}
                                 userPage={userPage}
                                 showPhoto={() => this.showModal(photo)}
-                                deletePhoto={() => this.props.deletePhoto(photo._id, this.props.match.params.user)}
+                                deletePhoto={() => this.props.deletePhoto(photo._id, this.props.user._id)}
                             />
                         )
                     })}

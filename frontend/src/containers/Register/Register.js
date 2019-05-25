@@ -4,6 +4,7 @@ import {Alert, Button, Form, FormGroup} from "reactstrap";
 
 import {registerUser} from "../../store/actions/usersActions";
 import FormElement from "../../components/UI/Form/FormElement";
+import FacebookLogin from "../../components/FacebookLogin/FacebookLogin";
 
 
 class Register extends Component {
@@ -74,8 +75,12 @@ class Register extends Component {
                             autoComplete="new-password"
                         />
 
-                        <FormGroup className="mb-0 mt-4">
+                        <FormGroup className="mt-4">
                             <Button type="submit" color="info" className="w-100">Register</Button>
+                        </FormGroup>
+
+                        <FormGroup className="mb-0">
+                            <FacebookLogin/>
                         </FormGroup>
                     </Form>
                 </div>

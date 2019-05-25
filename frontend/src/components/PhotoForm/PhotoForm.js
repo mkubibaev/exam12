@@ -40,7 +40,7 @@ class PhotoForm extends Component {
             }
         });
 
-        this.props.addPhoto(formData);
+        this.props.addPhoto(formData, this.props.user._id);
     };
 
     render() {

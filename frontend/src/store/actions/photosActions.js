@@ -56,7 +56,7 @@ export const getAuthor = id => {
     }
 };
 
-export const addPhoto = photoData => {
+export const addPhoto = (photoData, userId) => {
     return async dispatch => {
         dispatch(addDataRequest());
 
@@ -65,7 +65,7 @@ export const addPhoto = photoData => {
 
             dispatch(addDataSuccess());
             NotificationManager.success(response.data.message);
-            dispatch(push('/'))
+            dispatch(push(`/users/${userId}`));
         } catch (e) {
             dispatch(addDataFailure(e.response.data));
         }

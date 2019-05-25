@@ -4,8 +4,12 @@ import {NavLink as RouterNavLink} from "react-router-dom";
 import {apiURL} from "../../constants";
 
 const Photo = props => {
-    const user = props.user;
     const author = props.author;
+    let user = {};
+
+    if (props.user) {
+        user = props.user
+    }
 
     return (
         <Col xs="12" sm="6" md="4">

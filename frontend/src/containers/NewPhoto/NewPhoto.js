@@ -11,6 +11,7 @@ class NewPhoto extends Component {
                 <h3 className="mb-3">Add new photo</h3>
                 <PhotoForm
                     addPhoto={this.props.addPhoto}
+                    user={this.props.user}
                     error={this.props.error}
                 />
             </Fragment>
@@ -19,11 +20,12 @@ class NewPhoto extends Component {
 }
 
 const mapStateToProps = state => ({
-    error: state.photos.error
+    error: state.photos.error,
+    user: state.users.user
 });
 
 const mapDispatchToProps = dispatch => ({
-    addPhoto: photoData => dispatch(addPhoto(photoData))
+    addPhoto: (photoData, userId) => dispatch(addPhoto(photoData, userId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPhoto);
