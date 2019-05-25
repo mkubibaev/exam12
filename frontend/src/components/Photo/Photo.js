@@ -17,12 +17,16 @@ const Photo = props => {
                             {props.title}
                         </CardTitle>
                     </h4>
-                    <CardText>
-                        <span className="mr-1">by</span>
-                        <RouterNavLink to={`/users/${props.user._id}`}>
-                            {props.user.displayName}
-                        </RouterNavLink>
-                    </CardText>
+                    {props.user
+                        ? <CardText>
+                            <span className="mr-1">by</span>
+                            <RouterNavLink to={`/users/${props.user._id}`}>
+                                {props.user.displayName}
+                            </RouterNavLink>
+                        </CardText>
+                        : null
+                    }
+
                 </CardBody>
             </Card>
         </Col>

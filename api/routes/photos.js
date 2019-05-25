@@ -5,8 +5,14 @@ const Photo = require('../models/Photo');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+    const criteria = {}
+
+    if (req.query.user) {
+        criteria.user = req.query.user
+    }
+
     try {
-        const photos = await Photo.find().populate('user', 'displayName');
+        const photos = await Photo.find(criteria).populate('user', 'displayName');
 
         return res.send(photos);
     } catch (e) {

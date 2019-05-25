@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
 import {Row} from "reactstrap";
 
@@ -8,29 +8,52 @@ import Photo from "../components/Photo/Photo";
 
 class Photos extends Component {
     componentDidMount() {
-        this.props.fetchPhotos(this.props.user);
+        this.props.fetchPhotos(this.props.match.params.user);
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.user !== prevProps.match.params.user) {
+            this.props.fetchPhotos(this.props.match.params.user);
+        }
+    };
+
     render() {
+        let title = 'All photos';
+
+        if (this.props.photos && this.props.match.params.user) {
+            title = `Photos by ${this.props.photos[0].user.displayName}`
+        }
+
         return (
-            <Row>
+            <Fragment>
+                <h3 className="mb-3">{title}</h3>
+
                 {this.props.loading && <Loader/>}
 
-                {this.props.photos.map(photo => (
-                    <Photo
-                        key={photo._id}
-                        title={photo.title}
-                        image={photo.image}
-                        user={photo.user}
-                    />
-                ))}
-            </Row>
+                <Row>
+                    {this.props.photos.map(photo => {
+                        let user = photo.user;
+
+                        if (this.props.match.params.user) {
+                            user = null;
+                        }
+
+                        return (
+                            <Photo
+                                key={photo._id}
+                                title={photo.title}
+                                image={photo.image}
+                                user={user}
+                            />
+                        )
+                    })}
+                </Row>
+            </Fragment>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    user: state.users.user,
     photos: state.photos.photos,
     error: state.photos.error,
     loading: state.photos.loading

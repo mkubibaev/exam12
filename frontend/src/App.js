@@ -18,6 +18,7 @@ class App extends Component {
                 <Container className="py-4">
                     <Switch>
                         <Route path="/" exact component={Photos}/>
+                        <Route path="/users/:user" component={Photos}/>
                     </Switch>
                 </Container>
             </Fragment>

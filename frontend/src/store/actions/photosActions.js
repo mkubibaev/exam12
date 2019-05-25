@@ -26,7 +26,7 @@ export const fetchPhotos = user => {
     return async dispatch => {
         let url = '/photos';
 
-        if (user) url += `?category=${user}`;
+        if (user) url += `?user=${user}`;
 
         dispatch(fetchDataRequest());
 
