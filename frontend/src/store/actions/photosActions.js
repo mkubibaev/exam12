@@ -38,3 +38,19 @@ export const fetchPhotos = user => {
         }
     }
 };
+
+export const addPhoto = photoData => {
+    return async dispatch => {
+        dispatch(addDataRequest());
+
+        try {
+            const response = await axios.post('/photos', photoData);
+
+            dispatch(addDataSuccess());
+            NotificationManager.success(response.data.message);
+            dispatch(push('/'))
+        } catch (e) {
+            dispatch(addDataFailure(e.response.data));
+        }
+    }
+};

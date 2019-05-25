@@ -3,6 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import {createBrowserHistory} from "history";
 import {connectRouter, routerMiddleware} from "connected-react-router";
 
+import axios from '../axios-api';
 import {saveToLocalStorage, loadFromLocalStorage} from "./localStorage";
 import usersReducer from "./reducers/usersReducer";
 import photosReducer from "./reducers/photosReducer";
@@ -35,6 +36,15 @@ store.subscribe(() => {
             user: store.getState().users.user
         }
     });
+});
+
+axios.interceptors.request.use(config => {
+    try {
+        config.headers['Authorization'] = store.getState().users.user.token;
+    } catch (e) {
+        // do nothing, user is not logged in
+    }
+    return config;
 });
 
 export default store;

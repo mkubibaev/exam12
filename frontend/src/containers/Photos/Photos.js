@@ -1,11 +1,12 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from "react-redux";
+import {NavLink as RouterNavLink} from 'react-router-dom';
 import {Button, Modal, ModalBody, ModalFooter, Row} from "reactstrap";
 
-import {apiURL} from "../constants";
-import {fetchPhotos} from "../store/actions/photosActions";
-import Loader from "../components/UI/Loader/Loader";
-import Photo from "../components/Photo/Photo";
+import {apiURL} from "../../constants";
+import {fetchPhotos} from "../../store/actions/photosActions";
+import Loader from "../../components/UI/Loader/Loader";
+import Photo from "../../components/Photo/Photo";
 
 class Photos extends Component {
     state = {
@@ -43,6 +44,11 @@ class Photos extends Component {
 
                 {this.props.loading && <Loader/>}
 
+                { this.props.user && this.props.user._id === this.props.match.params.user
+                    ? <Button tag={RouterNavLink} to="/photos/new" color="info" className="mb-4">Add new photo</Button>
+                    : null
+                }
+
                 <Row>
                     {this.props.photos.map(photo => {
                         let user = photo.user;
@@ -77,6 +83,7 @@ class Photos extends Component {
 }
 
 const mapStateToProps = state => ({
+    user: state.users.user,
     photos: state.photos.photos,
     error: state.photos.error,
     loading: state.photos.loading

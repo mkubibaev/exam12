@@ -6,10 +6,7 @@ const UserMenu = ({user, logout}) => {
     return (
         <Nav>
             <NavItem>
-                <span className="nav-link">Hello, {user.fullname}</span>
-            </NavItem>
-            <NavItem>
-                <NavLink tag={RouterNavLink} to="/items/new">Add new item</NavLink>
+                <NavLink tag={RouterNavLink} to={`/users/${user._id}`}>Hello, {user.displayName}</NavLink>
             </NavItem>
             <NavItem>
                 <span className="nav-link" onClick={logout}>Logout</span>
