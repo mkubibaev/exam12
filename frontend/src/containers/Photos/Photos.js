@@ -24,10 +24,16 @@ class Photos extends Component {
         }
     };
 
-    toggleModal = selectedPhoto => {
+    showModal = selectedPhoto => {
         this.setState({
-            modal: !this.state.modal,
+            modal: true,
             selectedPhoto
+        });
+    };
+
+    closeModal = () => {
+        this.setState({
+            modal: false
         });
     };
 
@@ -63,7 +69,7 @@ class Photos extends Component {
                                 title={photo.title}
                                 image={photo.image}
                                 user={user}
-                                toggleModal={() => this.toggleModal(photo)}
+                                showModal={() => this.showModal(photo)}
                             />
                         )
                     })}
@@ -74,7 +80,7 @@ class Photos extends Component {
                     </ModalBody>
                     <ModalFooter className="d-flex justify-content-between">
                         <h5 className="m-0">{this.state.selectedPhoto.title}</h5>
-                        <Button color="secondary" size="sm" onClick={this.toggleModal}>Close</Button>
+                        <Button color="secondary" size="sm" onClick={this.closeModal}>Close</Button>
                     </ModalFooter>
                 </Modal>
             </Fragment>
